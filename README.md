@@ -7,28 +7,33 @@
 
 ## Description
 
-This repository contains all scripts, analyses, and reports generated for the Final Master's Thesis. The project focuses on integrative transcriptomic analysis to identify key molecular mechanisms involved in Neurofibromatosis Type I.
+This repository contains all scripts, analyses, and reports generated for the Final Master's Thesis. The project focuses on integrative transcriptomic analysis to identify key molecular mechanisms in Neurofibromatosis Type I.
 
 ---
 
 ## Project Structure
-'''
-├── README.md # Project description and instructions
-├── scripts/ # Analysis scripts
-│ ├── DE_script.sh
-│ └── Network_script.sh
-│ └── Network_script_part2.sh
-│ └── name_replacer.R
-├── Reports/ # Generated reports and results
-│ ├── DEG_report_ctrl_vs_gtdup.html
-│ └── DEG_report_gtdup_vs_opg.html
-│ └── DEG_report_mut_vs_ctrl.html
-│ └── DEG_report_opg_vs_ctrl_fc1.html
-│ └── functional_report_gtdup_vs_ctrl.html
-│ └── functional_report_gtdup_vs_opg.html
-│ └── functional_report_opg_vs_ctrl_fc1.html
-└── data/# Input dataset
-│ ├── final_counts.txt
-'''
+
+Below is a cleaned and well-formatted view of the repository structure. Files and directories are briefly described.
+
+```text
+.
+├── README.md                    # Project description and instructions
+├── scripts/                     # Analysis scripts
+│   ├── DE_script.sh             # Differential expression pipeline
+│   ├── Network_script.sh        # Network construction & analysis (part 1)
+│   ├── Network_script_part2.sh  # Network construction & analysis (part 2)
+│   └── name_replacer.R          # Helper R script to rename samples/genes
+├── Reports/                     # Generated reports and results (HTML)
+│   ├── DEG_report_ctrl_vs_gtdup.html
+│   ├── DEG_report_gtdup_vs_opg.html
+│   ├── DEG_report_mut_vs_ctrl.html
+│   ├── DEG_report_opg_vs_ctrl_fc1.html
+│   ├── functional_report_gtdup_vs_ctrl.html
+│   ├── functional_report_gtdup_vs_opg.html
+│   └── functional_report_opg_vs_ctrl_fc1.html
+└── data/                        # Input datasets
+    └── final_counts.txt         # Counts table used for analysis
+```
+
 
 
