@@ -13,7 +13,7 @@ This repository contains all scripts, analyses, and reports generated for the Fi
 
 ## Project Structure
 
-Below is a cleaned and well-formatted view of the repository structure. Files and directories are briefly described.
+Below is a view of the repository structure. Files and directories are briefly described.
 
 ```text
 .
@@ -23,7 +23,7 @@ Below is a cleaned and well-formatted view of the repository structure. Files an
 │   ├── Network_script.sh        # Network construction & analysis (part 1)
 │   ├── Network_script_part2.sh  # Network construction & analysis (part 2)
 │   └── name_replacer.R          # Helper R script to rename samples/genes
-├── Reports/                     # Generated reports and results (HTML)
+├── Reports/                     # Generated DEA and functional enrichment reports by ExpHunterSuite (HTML)
 │   ├── DEG_report_ctrl_vs_gtdup.html
 │   ├── DEG_report_gtdup_vs_opg.html
 │   ├── DEG_report_mut_vs_ctrl.html
