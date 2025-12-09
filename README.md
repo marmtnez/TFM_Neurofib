@@ -12,7 +12,7 @@ This repository contains all scripts, analyses, and reports generated for the Fi
 ---
 
 ## Project Structure
-´´´
+'''
 ├── README.md # Project description and instructions
 ├── scripts/ # Analysis scripts
 │ ├── DE_script.sh
@@ -29,6 +29,6 @@ This repository contains all scripts, analyses, and reports generated for the Fi
 │ └── functional_report_opg_vs_ctrl_fc1.html
 └── data/# Input dataset
 │ ├── final_counts.txt
-```
+'''
 
 
