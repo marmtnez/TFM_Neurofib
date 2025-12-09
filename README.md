@@ -32,7 +32,8 @@ Below is a view of the repository structure. Files and directories are briefly d
 │   ├── functional_report_gtdup_vs_opg.html
 │   └── functional_report_opg_vs_ctrl_fc1.html
 └── data/                        # Input datasets
-    └── final_counts.txt         # Counts table used for analysis
+│   ├── final_counts.txt    # Counts table used for analysis
+    └── mapping_report.html
 ```
 
 
