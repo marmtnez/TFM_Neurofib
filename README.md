@@ -1,6 +1,7 @@
 # Final Master's Project – Neurofibromatosis Type I
 
-**Title:** Integrative Transcriptomic Analysis to Identify Molecular Mechanisms in Neurofibromatosis Type 1 
+**Title:** Integrative Transcriptomic Analysis to Identify Molecular Mechanisms in Neurofibromatosis Type 1.
+
 **Institution:** Universidad Pablo de Olavide 
 
 ---
