@@ -1,0 +1,98 @@
+prepare_network){
+	resources: -m '500gb' -t '1-00:00:00' -n 'cal'
+	source ~soft_bio_267/initializes/init_python
+	source ~soft_bio_267/initializes/init_degenes_hunter
+	source ~soft_bio_267/initializes/init_R45
+	standard_name_replacer -i $degs_list \
+		-I $dict \
+		-c 1 \
+		-f 1 \
+		-t 2 \
+		-o degs_geneID_list
+
+	input_genes_list=`cat degs_geneID_list | tr '\n' ',' | sed 's/,$//'`
+	
+	netanalyzer -i $string_network \
+		-f pair \
+		-l main \
+		--filter_connected_components 5 \
+		--output_network nodes_network
+	cut -f 1,2 nodes_network | tr '\t' '\n' | sort -u | sed '1s/^/Gene\n/' > ensembl_genes
+	add_annotation.R -i ensembl_genes -o ENS_genes_annotated -I ENSEMBL
+	tail -n +2 ENS_genes_annotated > ENS_genes_dictionary
+	standard_name_replacer -i nodes_network \
+		-I ENS_genes_dictionary \
+		-c 1,2 \
+		-f 1 \
+		-t 2 \
+		-o geneIDs_string_network
+	rm ENS_genes_annotated
+	# To avoid embedding distorsion, we normalize nodes information
+	text2binary_matrix -i geneIDs_string_network \
+		-o adjacency_matrix \
+		-t pair \
+		-O bin \
+		-s matrix_metrics \
+		--normalize_by "rows_cols" 
+	?
+	netanalyzer -i adjacency_matrix.npy \
+		-n adjacency_matrix_rowIds.lst \
+		-f bin \
+		-k "node2vec" \
+		-K embedding_coords \
+		--both_repre_formats \
+		-l 'genes' \
+		-u 'genes' \
+		--embedding_add_options "'window':10,'num_walks':10,'walk_length':100,'dimensions':128" \
+		--embedding_coords \
+		--cluster_embedding "HDBSCAN" \
+		-r $input_genes_list \
+		--cluster_embedding_add_options "'min_cluster_size': 2,'min_samples': 2"
+	text2binary_matrix -i embedding_coords.npy -t 'bin' -O 'bin' --coords2kernel "dotProduct" --normalize_by 'cosine' -o kernel
+	aggregate_column_data -i discovered_clusters.txt -x 1 -a 2 -s ',' > groups_aggregated.txt
+}
+
+gene_network_representation){
+	resources: -c 32 -t 7-00:00:00 -m '182gb' -n 'cal'
+	source ~soft_bio_267/initializes/init_python
+	export PYTHONHASHSEED=123456
+	?
+	net_explorer --seed $PYTHONHASHSEED \
+		-i "string,prepare_network)/geneIDs_string_network" \
+		--seed_nodes prepare_network)/groups_aggregated \
+		-N \
+		-T 1 \
+		--graph_options 'method=sigma2,width=1200px,height=900px,iterations=200' \
+		--embedding_proj "umap" \
+		-G prepare_network)/groups_from_embedding \
+		-g network_umap &> nt_umap.log
+}
+
+gene_network_enrichment){
+	source ~soft_bio_267/initializes/init_degenes_hunter
+	source ~soft_bio_267/initializes/init_R45
+	?
+	clusters_to_enrichment.R -i prepare_network)/groups_aggregated.txt \
+		-w [cpu] \
+		-o functional_results \
+		-f MF,BP,CC \
+		--pvalcutoff $pvalue_cutoff \
+		-k SYMBOL \
+		-O "Human" \
+		-c \
+		-F
+}
+
+ranker_genes){
+	source ~soft_bio_267/initializes/init_python
+	source ~soft_bio_267/initializes/init_degenes_hunter
+	cut -f 1 prepare_network)/groups_aggregated.txt | sed "s/$/\t$target_gene/g" > disease_genes.txt
+	text2binary_matrix -i prepare_network)/geneIDs_string_network -t "pair" -O "bin" -o nodes_network_matrix
+	?
+	ranker -k prepare_network)/kernel.npy -n prepare_network)/embedding_coords_rowIds.lst --adj_matrix nodes_network_matrix.npy \
+		--seed_nodes prepare_network)/groups_aggregated.txt \
+		-f disease_genes.txt \
+		--score2pvalue "logistic" \
+		--representation_seed_metric "fisher"
+	sed '1i candidates\tscore\tnormalized_score\trank\tuniq_rank\tseed_group' ranked_genes_all_candidates
+}
