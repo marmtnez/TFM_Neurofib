@@ -11,8 +11,7 @@ This repository contains all scripts, analyses, and reports developed for the Fi
 
 The workflow combines differential expression analysis, functional enrichment, and network-based approaches to uncover dysregulated pathways and gene interactions relevant to the disease.
 
-> _**Note**: The `Integrative_code` directory was designed to run on Picasso (UMA supercomputer). Adaptation for local execution is planned.
-This repository contains all scripts, analyses, and reports generated for the Final Master's Thesis. The project focuses on integrative transcriptomic analysis to identify key molecular mechanisms in Neurofibromatosis Type I._
+> _**Note**: The _`Integrative_code`_ directory was designed to run on Picasso (UMA supercomputer). Adaptation for local execution is planned._
 
 ---
 
