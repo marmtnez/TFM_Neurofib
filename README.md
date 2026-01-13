@@ -26,7 +26,6 @@ Below is a view of the repository structure. Files and directories are briefly d
 │   ├── DE_script.sh             # Differential expression pipeline
 │   ├── Network_script.sh        # Network construction & analysis (part 1)
 │   ├── Network_script_part2.sh  # Network construction & analysis (part 2)
-│   ├── Network_script_part2.sh  # Network construction & analysis (part 2)
 │   ├── name_replacer.R          # Helper R script to rename genes
 │   └── Integrative_code         # Code for Network Analysis
 │       ├── daemon.sh            
@@ -39,9 +38,9 @@ Below is a view of the repository structure. Files and directories are briefly d
 │   ├── functional_report_gtdup_vs_ctrl.html
 │   ├── functional_report_gtdup_vs_opg.html
 │   └── functional_report_opg_vs_ctrl_fc1.html
-└── data/                        # Input datasets
-    ├── final_counts.txt    # Counts table used for analysis
-    └── mapping_report.html    # QC of the reads used for the analysis
+└── data/                       # Input datasets
+    ├── final_counts.txt        # Counts table used for analysis
+    └── mapping_report.html     # QC of the reads used for the analysis
 ```
 
 
